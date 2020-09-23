@@ -101,8 +101,8 @@ T5QylRM=
     },
     production: {
         port: 5000,
-        localhost: 'http://3.122.243.96:5000/api/v1/',
-        frontend: 'http://3.122.243.96:4200',
+        localhost: 'http://18.157.176.79:5000/api/v1/',
+        frontend: 'http://18.157.176.79:4200',
         debug: false,
         fork: true,
         https: false,
