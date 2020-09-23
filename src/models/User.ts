@@ -91,7 +91,7 @@ export class UserRepository extends ModelDao<number, User> {
 
     search(search: string, client?: ClientBase): Promise<User[]> {
         return (client || this.pool).query(`SELECT * FROM ${this.table} u
-WHERE ("firstName" ilike $1 OR "lastName" ilike $1 OR "accountName" ilike $1 OR id like $1)`, ['%' + search + '%'])
+WHERE ("firstName" ilike $1 OR "lastName" ilike $1 OR "accountName" ilike $1)`, ['%' + search + '%'])
             .then(q => q.rows.map(r => this.buildObject(r)));
     }
 
