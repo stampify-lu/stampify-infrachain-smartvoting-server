@@ -129,7 +129,7 @@ export class MeetingController extends AbstractController {
     addMeetingUser(req: Request, res: Response) {
         const subject: Meeting = res.locals.subject;
         const client: ClientBase = res.locals.dbClient;
-        if(subject.timeBegin > new Date()) {
+        if(subject.timeBegin < new Date()) {
             res.status(400).json({
                 error: {
                     errorKey: 'client.badState',
