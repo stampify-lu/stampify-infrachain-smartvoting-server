@@ -15,7 +15,6 @@ export class MeetingController extends AbstractController {
      * @apiDescription Get meetings for the logged in user
      * @apiParam (Path) {String} version Version number
      * @apiParam (Query) {Number} minDate A minimum epoch in milliseconds for timeBegin
-     * @apiParam (Query) {Boolean} alsoCancelled If want to get also cancelled
      * @apiParam (Query) {String} search A name like
      * @apiParam (Query) {String} orderColumn A column to sort by, defaults timeBegin
      * @apiParam (Query) {String} orderAsc An order to sort by, defaults ASC
@@ -41,12 +40,9 @@ export class MeetingController extends AbstractController {
         const limit = req.query.limit === '0' ? 0 : Math.min(Math.max(0, parseInt(req.query.limit, 10)) || 30, 30);
         const inputs: any[] = [];
         if(req.query.minDate) inputs.push(new Date(parseInt(req.query.minDate, 10))); else inputs.push(1);
-        if(req.query.committeeId) inputs.push(parseInt(req.query.committeeId, 10)); else inputs.push(1);
         if(req.query.search) inputs.push('%' + decodeURIComponent(req.query.search) + '%'); else inputs.push(1);
         this.repo.Meeting.getForUserViewCountBy(user.id, order, offset, limit, '1=1 AND ' + (req.query.minDate ? '"timeBegin" > $1' : '1=$1')
-                + ' AND ' + (req.query.committeeId ? 'committee_id=$2' : '1=$2') + ' AND ' + (req.query.alsoCancelled === 'true' ?
-                '1=1' : '"cancelledAt" IS NULL') + ' AND ' +
-                (req.query.search ? '"name" ilike $4' : '1=$4') , inputs).then(values =>
+                + ' AND ' + (req.query.search ? '"name" ilike $2' : '1=$2') , inputs).then(values =>
             res.status(200).json({
                 targetAppVesion: this.config.min_fe_version,
                 result: values,
