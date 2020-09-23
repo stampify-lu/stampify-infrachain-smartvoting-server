@@ -45,7 +45,7 @@ export class MeetingController extends AbstractController {
                 + ' AND ' + (req.query.search ? '"name" ilike $2' : '1=$2') , inputs).then(values =>
             res.status(200).json({
                 targetAppVesion: this.config.min_fe_version,
-                result: values,
+                result: values.views,
                 count: values.count
             })).catch(err => res.status(500).json({
                 error: {
