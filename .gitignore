@@ -1,6 +1,3 @@
-build
-!build/contracts
-
 logs
 node_modules
 src/**/*.js
