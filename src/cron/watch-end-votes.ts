@@ -21,7 +21,7 @@ export function watchEndVotes(repo: ModelRepository, logger: Logger, Meeting: Co
                     return Promise.all(ums.map(um => repo.User.get(um.user__id).then(u => readMeetingVoteCall(config, Meeting, meeting, u.publicAddress)))).then(votes => {
                         const vf = votes.reduce((prev, now) => prev + (now === Vote.POSITIVE ? 1 : 0), 0);
                         const va = votes.reduce((prev, now) => prev + (now === Vote.NEGATIVE ? 1 : 0), 0);
-                        const ve = votes.reduce((prev, now) => prev + (now !== Vote.POSITIVE && now !== Vote.NEGATIVE ? 1 : 0), 0);
+                        const ve = votes.reduce((prev, now) => prev + (now === Vote.ABST ? 1 : 0), 0);
                         if(meeting.timeEnd < new Date() || (vf+va+ve) >= ums.length) {
                             return updateMeetingTransaction(config, Meeting, meeting, vf, va, ve).then(() => {
                                 meeting.timeFrozen = new Date();

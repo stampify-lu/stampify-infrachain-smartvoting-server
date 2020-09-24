@@ -28,7 +28,7 @@ export class MeetingRepository extends ModelDao<number, Meeting> {
         q.updatedOn = q.updatedOn && new Date(q.updatedOn);
         q.timeBegin = new Date(q.timeBegin);
         q.timeEnd = new Date(q.timeEnd);
-        q.timeFrozen = new Date(q.timeFrozen);
+        q.timeFrozen = q.timeFrozen && new Date(q.timeFrozen);
         return q;
     }
 
