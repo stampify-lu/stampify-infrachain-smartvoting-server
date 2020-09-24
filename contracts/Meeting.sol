@@ -47,7 +47,7 @@ contract Meeting {
     cyphered_votes[msg.sender] = vote;
   }
 
-  function set_result(uint vf, uint va, uint ve) public restricted after_end {
+  function set_result(uint vf, uint va, uint ve) public restricted {
     votes_for = vf;
     votes_against = va;
     votes_empty = ve;
